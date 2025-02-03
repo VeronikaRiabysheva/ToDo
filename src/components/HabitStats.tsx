@@ -53,14 +53,14 @@ export const HabitStats: React.FC = () => {
   return (
     <Paper elevation={2} sx={{ p: 2, mt: 4 }}>
       <Typography variant="h6" gutterBottom>
-        Habbit Statistics
+        Статистика
       </Typography>
-      <Typography variant="body1">Total Habits: {habits.length}</Typography>
+      <Typography variant="body1">Всего задач: {habits.length}</Typography>
       <Typography variant="body1">
-        Completed Today: {getCompletedToday()}
+        Завершено сегодня: {getCompletedToday()}
       </Typography>
       <Typography variant="body1">
-        The longest streak: {getLongetsStreak()}
+        Максимальное время выполнения задачи: {getLongetsStreak()}
       </Typography>
     </Paper>
   );

@@ -14,7 +14,7 @@ import { addHabit } from "../store/habit.slice";
 
 const AddHabitForm: React.FC = () => {
   const [name, setName] = useState<string>("");
-  const [frequency, setFrequency] = useState<"daily" | "weekly">("daily");
+  const [frequency, setFrequency] = useState<"День" | "Неделя">("День");
 
   const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (e: React.FormEvent) => {
@@ -33,25 +33,25 @@ const AddHabitForm: React.FC = () => {
     <form onSubmit={handleSubmit}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <TextField
-          label="Habit Name"
+          label="Название"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter habit name"
+          placeholder="Введите задачу"
           fullWidth
         />
 
         <FormControl fullWidth>
-          <InputLabel>Frequency</InputLabel>
+          <InputLabel>Частота</InputLabel>
           <Select
             value={frequency}
-            onChange={(e) => setFrequency(e.target.value as "daily" | "weekly")}
+            onChange={(e) => setFrequency(e.target.value as "День" | "Неделя")}
           >
-            <MenuItem value="daily">Daily</MenuItem>
-            <MenuItem value="weekly">Weekly</MenuItem>
+            <MenuItem value="День">День</MenuItem>
+            <MenuItem value="Неделя">Неделя</MenuItem>
           </Select>
         </FormControl>
         <Button type="submit" variant="contained" color="primary">
-          Add Habit
+          Добавить
         </Button>
       </Box>
     </form>

@@ -9,9 +9,9 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { CheckCircle, Delete, Hail } from "@mui/icons-material";
+import { CheckCircle, Delete } from "@mui/icons-material";
 import { AppDispatch } from "../store/store";
-import { Habit, toggleHabit } from "../store/habit.slice";
+import { Habit, removeHabit, toggleHabit } from "../store/habit.slice";
 
 export const HabitList: React.FC = () => {
   const { habits } = useSelector((state: RootState) => state.habits);
@@ -52,7 +52,7 @@ export const HabitList: React.FC = () => {
                 </Typography>
               </Grid2>
             </Grid2>
-            <Grid2 xs={12} sm={6}>
+            <Grid2>
               <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
                 <Button
                   variant="outlined"
@@ -65,17 +65,23 @@ export const HabitList: React.FC = () => {
                   }
                 >
                   {habit.completedDates.includes(today)
-                    ? "Completed"
-                    : "Mark Complete"}
+                    ? "Завершено"
+                    : "Завершить"}
                 </Button>
-                <Button variant="outlined" color="error" startIcon={<Delete />}>
-                  Remove
+                <Button
+                  variant="outlined"
+                  color="error"
+                  startIcon={<Delete />}
+                  onClick={() => dispatch(removeHabit({ id: habit.id }))}
+                >
+                  Удалить
                 </Button>
               </Box>
             </Grid2>
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2">
-                Current Streak: {getStreak(habit)} days
+                Продолжительность: {getStreak(habit)}{" "}
+                {getStreak(habit) == 1 ? "день" : "дней"}
               </Typography>
               <LinearProgress
                 variant="determinate"

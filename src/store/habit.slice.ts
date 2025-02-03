@@ -1,14 +1,9 @@
-import {
-  asyncThunkCreator,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Habit {
   id: string;
   name: string;
-  frequency: "daily" | "weekly";
+  frequency: "День" | "Неделя";
   completedDates: string[];
   createdAt: string;
 }
@@ -29,15 +24,15 @@ export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
   const mockHabits: Habit[] = [
     {
       id: "1",
-      name: "Read",
-      frequency: "daily",
+      name: "Выучить Redux toolkit",
+      frequency: "День",
       completedDates: [],
       createdAt: new Date().toISOString(),
     },
     {
       id: "2",
-      name: "Exercise",
-      frequency: "daily",
+      name: "Прочитать книгу",
+      frequency: "День",
       completedDates: [],
       createdAt: new Date().toISOString(),
     },
@@ -51,7 +46,10 @@ const habitSlice = createSlice({
   reducers: {
     addHabit: (
       state,
-      action: PayloadAction<{ name: string; frequency: "daily" | "weekly" }>
+      action: PayloadAction<{
+        name: string;
+        frequency: "День" | "Неделя";
+      }>
     ) => {
       const newHabit: Habit = {
         id: Date.now().toString(),
@@ -78,7 +76,15 @@ const habitSlice = createSlice({
         }
       }
     },
-    removeHabit: () => {},
+    removeHabit: (state, action: PayloadAction<{ id: string }>) => {
+      const habit = state.habits.find(
+        (newHabit) => newHabit.id === action.payload.id
+      );
+      if (habit) {
+        const index = state.habits.indexOf(habit);
+        state.habits.splice(index, 1);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchHabits.pending, (state) => {
@@ -95,5 +101,5 @@ const habitSlice = createSlice({
   },
 });
 
-export const { addHabit, toggleHabit } = habitSlice.actions;
+export const { addHabit, toggleHabit, removeHabit } = habitSlice.actions;
 export default habitSlice.reducer;
